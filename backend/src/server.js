@@ -732,9 +732,13 @@ app.use('/api/', limiter);
 //   methods: ['GET','POST','PUT','DELETE'],
 //   allowedHeaders: ['Content-Type','Authorization']
 // }));
+// app.use(cors({
+//   origin: "*",
+//   // credentials: true
+// }));
 app.use(cors({
-  origin: "*",
-  // credentials: true
+  origin: true,
+  credentials: true
 }));
 
 app.options('*', cors());
