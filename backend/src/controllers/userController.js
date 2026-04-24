@@ -2,12 +2,39 @@ const User = require('../models/User');
 
 // @desc    Get all users
 // @route   GET /api/users
+// exports.getUsers = async (req, res) => {
+//   try {
+//     let query = {};
+//     if (req.query.role) query.role = req.query.role;
+//     if (req.query.status) query.status = req.query.status;
+//     if (req.query.department) query.department = req.query.department;
+//     if (req.query.search) {
+//       query.$or = [
+//         { name: { $regex: req.query.search, $options: 'i' } },
+//         { email: { $regex: req.query.search, $options: 'i' } }
+//       ];
+//     }
+
+//     const users = await User.find(query).sort({ createdAt: -1 });
+//     res.json({ success: true, count: users.length, data: users });
+//   } catch (err) {
+//     res.status(500).json({ success: false, error: err.message });
+//   }
+// };
 exports.getUsers = async (req, res) => {
   try {
     let query = {};
-    if (req.query.role) query.role = req.query.role;
+
+    // ✅ FIX: Handle "staff" properly
+    if (req.query.role === "staff") {
+      query.role = { $in: ["doctor", "nurse", "pharmacist"] };
+    } else if (req.query.role) {
+      query.role = req.query.role;
+    }
+
     if (req.query.status) query.status = req.query.status;
     if (req.query.department) query.department = req.query.department;
+
     if (req.query.search) {
       query.$or = [
         { name: { $regex: req.query.search, $options: 'i' } },
@@ -16,12 +43,12 @@ exports.getUsers = async (req, res) => {
     }
 
     const users = await User.find(query).sort({ createdAt: -1 });
+
     res.json({ success: true, count: users.length, data: users });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
 };
-
 // @desc    Get single user
 // @route   GET /api/users/:id
 exports.getUser = async (req, res) => {
