@@ -2,7 +2,7 @@ const Salary = require('../models/Salary');
 const User = require('../models/User');
 
 // Default base salaries by role
-const BASE_SALARY = { admin:80000, doctor:120000, nurse:45000, pharmacist:50000, wardboy:25000, sweeper:20000, otboy:28000 };
+const BASE_SALARY = { admin:80000, doctor:120000, nurse:45000, pharmacist:50000, wardboy:25000, sweeper:20000, otboy:28000, receptionist:30000, accountant:40000, lab_technician:35000, radiology_technician:35000, physiotherapist:40000, dietitian:35000, security_guard:22000, driver:25000 };
 const ALLOWANCE_PCT = { hra:0.4, da:0.12, ta:0.05, medical:0.03, special:0.05 }; // % of basic
 const DEDUCTION_PCT = { pf:0.12, esi:0.0175, tax:0.1 }; // % of gross
 
@@ -77,7 +77,7 @@ exports.generateSalary = async (req, res) => {
 exports.bulkGenerateSalary = async (req, res) => {
   try {
     const { month, year } = req.body;
-    const staff = await User.find({ status:'approved', role:{ $in:['admin','doctor','nurse','pharmacist','wardboy','sweeper','otboy'] } });
+    const staff = await User.find({ status:'approved', role:{ $in:['admin','doctor','nurse','pharmacist','wardboy','sweeper','otboy','labtechnician','radiologist','physiotherapist','dietitian','security_guard','driver'] } });
     const results = [];
     for (const emp of staff) {
       const basic = BASE_SALARY[emp.role] || 30000;
