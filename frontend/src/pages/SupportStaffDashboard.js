@@ -72,7 +72,7 @@ export default function SupportStaffDashboard() {
       facilityAPI.getSchedules({ userId: user?._id, week: getWeekDates(weekOffset)[0].toISOString() }),
     ]);
 
-    // ✅ FIXED VERSION
+    
     setRooms(rRes.status === "fulfilled" ? rRes.value.data.data : []);
     setSchedules(sRes.status === "fulfilled" ? sRes.value.data.data : []);
 

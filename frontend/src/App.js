@@ -83,6 +83,7 @@ function AppRoutes() {
         <Route path="salary"  element={<ProtectedRoute roles={['admin',...ALL_STAFF]}><SalaryPage /></ProtectedRoute>}/>
         <Route path="chat"    element={<ProtectedRoute roles={['admin',...ALL_STAFF]}><ChatPage /></ProtectedRoute>}/>
 
+
         {/* ── Clinical ── */}
         <Route path="appointments" element={<AppointmentsPage />}/>
         <Route path="patients"  element={<ProtectedRoute roles={['admin','doctor','nurse','receptionist']}><PatientsPage /></ProtectedRoute>}/>
